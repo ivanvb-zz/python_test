@@ -1,0 +1,62 @@
+buyin = float(input('請輸入買價：'))
+buyType = int(input('請輸入類型（0:0股/1:整股）：'))
+if buyType == 0:
+    buyCount = float(input('請輸入股數：'))
+else:
+    buyCount = 1000
+buytotal = buyin * buyCount
+soldout = float(input('請輸入賣價：'))
+soldtotal = soldout * buyCount
+fee = 0.1425/100
+buyfee = 0
+soldfee = 0
+feeLimit = 20
+stockTax = 0.3/100
+
+#計算買入手續費
+if buytotal * fee < 20:
+    buyfee = feeLimit
+else:
+    buyfee = buytotal * fee
+
+print('買入支出:', buytotal + buyfee)
+
+#計算賣出獲利最低價
+#if soldout == 0:
+#    soldout = ((buyin + buyfee) / (buyCount * (1 - fee - stockTax))) + 1.1
+#    print('賣價建議:',soldout)
+#soldout = soldout * buyCount
+if soldout == 0:
+    soldout = buyin
+    soldtotal = soldout * buyCount
+    if soldtotal * fee < 20:
+        soldfee = feeLimit
+    else:
+        soldfee = soldtotal * fee
+    while soldtotal - (buytotal + buyfee + soldfee + soldtotal * stockTax) < 0:
+        if buyType == 1:
+            soldout = soldout + 0.1
+        else:
+            soldout = soldout + 1
+        soldtotal = soldout * buyCount
+        if soldtotal * fee < 20:
+            soldfee = feeLimit
+        else:
+            soldfee = soldtotal * fee
+        #print('賣價建議:',soldout)
+        #print('賣出支出:',soldfee + soldtotal * stockTax)
+        #rint('賣出收入:',soldtotal)
+        #print('賣出實收:',soldtotal - (soldfee + soldtotal * stockTax))
+        #print('損益:',soldtotal - (buytotal + buyfee + soldfee + soldtotal * stockTax))
+        #print('-' * 100)
+    print('賣價建議:',soldout)
+else:
+#計算賣出手續費
+    if soldtotal * fee < 20:
+        soldfee = feeLimit
+    else:
+        soldfee = soldtotal * fee
+print('賣出支出:',soldfee + soldtotal * stockTax)
+print('賣出收入:',soldtotal)
+print('賣出實收:',soldtotal - (soldfee + soldtotal * stockTax))
+print('損益:',soldtotal - (buytotal + buyfee + soldfee + soldtotal * stockTax))
