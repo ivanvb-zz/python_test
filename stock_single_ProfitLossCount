@@ -1,5 +1,10 @@
-#加個判斷,類型設定非零股或整股時給重新輸入使用
-restart = 1
+restart = 1             #加個判斷,類型設定非零股或整股時給重新輸入使用
+fee = 0.1425/100        #手續費
+buyfee = 0              #買入手續費
+soldfee = 0             #賣出手續費
+feeLimit = 20           #手續費下限
+stockTax = 0.3/100      #證交稅
+
 while restart == 1:
     buyin = float(input('請輸入買價：'))
     buyType = input('請輸入類型（0:零股/1:整股）：')
@@ -15,11 +20,6 @@ while restart == 1:
         buytotal = buyin * buyCount
         soldout = float(input('請輸入賣價：'))
         soldtotal = soldout * buyCount
-        fee = 0.1425/100
-        buyfee = 0
-        soldfee = 0
-        feeLimit = 20
-        stockTax = 0.3/100
 
         #計算買入手續費
         if buytotal * fee < 20:
